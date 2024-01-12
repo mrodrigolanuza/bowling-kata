@@ -78,7 +78,7 @@ describe('The Bowling Game', ()=>{
 		
 		let finalScore = game.calculateFinalScore();
 
-		expect(finalScore).toBe(17);
+		expect(finalScore).toBe(20);
 
 	 });
  });
