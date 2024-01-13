@@ -1,5 +1,6 @@
 export class BowlingGame {
-	rolls: number[] = [];
+    NUM_STRIKE_PINS: number = 10;
+    rolls: number[] = [];
 	
     constructor(){}
     
@@ -8,34 +9,39 @@ export class BowlingGame {
 	}
     
     calculateFinalScore() {        
-        return this.calculateTotalBasePoints() + this.calculateTotalSpecialPoints();
+        return this.calculateBasePoints() + this.calculateSpecialPoints();
     }
 
-    private calculateTotalSpecialPoints() {
+    private calculateBasePoints() {
+        return this.rolls
+                   .slice(0,20)
+                   .reduce((total, pins) => total + pins, 0);
+    }
+    
+    private calculateSpecialPoints() {
+        const MAX_FRAMES = 10;
         let totalSpecialPoints = 0;
-        for (let cntFrame = 0; cntFrame < this.rolls.length / 2; cntFrame += 2) {
-            let frameSubtotal = this.rolls[cntFrame] + this.rolls[cntFrame + 1];
-
-            if (this.isStrike(frameSubtotal, cntFrame)) {
-                totalSpecialPoints += this.rolls[cntFrame + 2];
-                totalSpecialPoints += this.rolls[cntFrame + 3];
+        
+        for (let cntFrame = 0; cntFrame < MAX_FRAMES; cntFrame++) {
+            
+            let frameSubtotal = this.rolls[cntFrame*2] + this.rolls[(cntFrame*2) + 1];
+    
+            if (this.isStrike(cntFrame)) {
+                totalSpecialPoints += this.rolls[cntFrame*2 + 2];
+                totalSpecialPoints += this.rolls[cntFrame*2 + 3];
             }
             else if (this.isSpare(frameSubtotal)) {
-                totalSpecialPoints += this.rolls[cntFrame + 2];
+                totalSpecialPoints += this.rolls[cntFrame*2 + 2];
             }
         }
         return totalSpecialPoints;
     }
 
-    private calculateTotalBasePoints() {
-        return this.rolls.reduce((total, pins) => total + pins, 0);
-    }
-
     private isSpare(frameSubtotal: number) {
-        return frameSubtotal == 10;
+        return frameSubtotal == this.NUM_STRIKE_PINS;
     }
-
-    private isStrike(frameSubtotal: number, cntFrame: number) {
-        return frameSubtotal == 10 && this.rolls[cntFrame] == 10;
+    
+    private isStrike(cntFrame: number) {
+        return this.rolls[cntFrame*2] == this.NUM_STRIKE_PINS;
     }
 }

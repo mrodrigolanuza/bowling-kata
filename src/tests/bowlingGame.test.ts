@@ -1,6 +1,8 @@
 import { BowlingGame } from '../core/bowlingGame';
 
 const NUM_REALESES = 20;
+const NUM_STRIKE_PINS = 10;
+
 describe('The Bowling Game', ()=>{
 	let game;
 
@@ -68,8 +70,8 @@ describe('The Bowling Game', ()=>{
 
 	 it('final score should be 20 in case strike ((X 23)) and gutter balls the rest of frames', ()=>{
 		
-		game.roll(10);
-		game.roll(0);						
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
 		game.roll(2);
 		game.roll(3);
 		for(let i = 4; i < NUM_REALESES; i++ ){
@@ -79,6 +81,38 @@ describe('The Bowling Game', ()=>{
 		let finalScore = game.calculateFinalScore();
 
 		expect(finalScore).toBe(20);
+
+	 });
+
+	 it('final score should be 300 when a perfect game (all strikes)', ()=>{
+		
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(0);
+		
+		game.roll(NUM_STRIKE_PINS);
+		game.roll(NUM_STRIKE_PINS);
+		
+		let finalScore = game.calculateFinalScore();
+
+		expect(finalScore).toBe(300);
 
 	 });
  });
