@@ -2,8 +2,8 @@ import { Release } from '../core/release';
 
 const FIRST = 0;
 const SECOND = 1;
-
 const STRIKE_NUM_PINS = 10;
+
 export class Frame {
     private _releases: Release[] = [];
     

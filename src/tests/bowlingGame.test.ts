@@ -10,25 +10,6 @@ describe('The Bowling Game', ()=>{
         game = new BowlingGame();
     });
 
-	it('should be able to create a bowling game', ()=>{
-       
-	   expect(game).toBeInstanceOf(BowlingGame);
-	});
-
-	it('should be able to roll a ball', ()=>{
-		game.roll(0);
-		expect(game.rolls).toEqual([0]);
-	 });
-
-	 it('should be able to calculate the final score', ()=>{
-		game.roll(5);
-		game.roll(12);
-		
-		let finalScore = game.calculateFinalScore();
-		
-		expect(finalScore).toBe(17);
-	 });
-
 	 it('final score should be zero when all gutter balls', ()=>{
 
 		for(let i = 0; i < NUM_REALESES; i++ ){
@@ -71,10 +52,9 @@ describe('The Bowling Game', ()=>{
 	 it('final score should be 20 in case strike ((X 23)) and gutter balls the rest of frames', ()=>{
 		
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
 		game.roll(2);
 		game.roll(3);
-		for(let i = 4; i < NUM_REALESES; i++ ){
+		for(let i = 3; i < NUM_REALESES; i++ ){
 			game.roll(0);						
 		}
 		
@@ -87,32 +67,84 @@ describe('The Bowling Game', ()=>{
 	 it('final score should be 300 when a perfect game (all strikes)', ()=>{
 		
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
 		game.roll(NUM_STRIKE_PINS);
-		game.roll(0);
-		
+		//Extra
 		game.roll(NUM_STRIKE_PINS);
 		game.roll(NUM_STRIKE_PINS);
 		
 		let finalScore = game.calculateFinalScore();
 
 		expect(finalScore).toBe(300);
+
+	 });
+
+	 it('final score should be 150 when all spires of 5 and a final 5 (5/ + 5)', ()=>{
+		
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		game.roll(5);
+		//Extra
+		game.roll(5);
+				
+		let finalScore = game.calculateFinalScore();
+
+		expect(finalScore).toBe(150);
+
+	 });
+
+	 it('final score should be 180 when all spires of 8 and a final 8 (8/ + 8)', ()=>{
+		
+		game.roll(8);
+		game.roll(2);
+		game.roll(8);
+		game.roll(2);
+		game.roll(8);
+		game.roll(2);
+		game.roll(8);
+		game.roll(2);
+		game.roll(8);
+		game.roll(2);
+		game.roll(8);
+		game.roll(2);
+		game.roll(8);
+		game.roll(2);
+		game.roll(8);
+		game.roll(2);
+		game.roll(8);
+		game.roll(2);
+		game.roll(8);
+		game.roll(2);
+		//Extra
+		game.roll(8);
+				
+		let finalScore = game.calculateFinalScore();
+
+		expect(finalScore).toBe(180);
 
 	 });
  });

@@ -1,6 +1,11 @@
+import { Frame } from "./frame";
+import { Release } from "./release";
+
+const STRIKE_NUM_PINS = 10;
+
 export class BowlingGame {
-    NUM_STRIKE_PINS: number = 10;
     rolls: number[] = [];
+    frames: Frame[] = [];
 	
     constructor(){}
     
@@ -9,39 +14,46 @@ export class BowlingGame {
 	}
     
     calculateFinalScore() {        
-        return this.calculateBasePoints() + this.calculateSpecialPoints();
-    }
-
-    private calculateBasePoints() {
-        return this.rolls
-                   .slice(0,20)
-                   .reduce((total, pins) => total + pins, 0);
-    }
-    
-    private calculateSpecialPoints() {
-        const MAX_FRAMES = 10;
-        let totalSpecialPoints = 0;
         
-        for (let cntFrame = 0; cntFrame < MAX_FRAMES; cntFrame++) {
-            
-            let frameSubtotal = this.rolls[cntFrame*2] + this.rolls[(cntFrame*2) + 1];
-    
-            if (this.isStrike(cntFrame)) {
-                totalSpecialPoints += this.rolls[cntFrame*2 + 2];
-                totalSpecialPoints += this.rolls[cntFrame*2 + 3];
+        //Create frames grouping rolls
+        for (let idRoll = 0; idRoll < this.rolls.length; idRoll++){
+            //Strike
+            if(this.rolls[idRoll] == STRIKE_NUM_PINS){
+                this.frames.push(Frame.create(Release.create(STRIKE_NUM_PINS), 
+                                              Release.createEmpty()));
+                continue;
             }
-            else if (this.isSpare(frameSubtotal)) {
-                totalSpecialPoints += this.rolls[cntFrame*2 + 2];
+            //Other case
+            this.frames.push(Frame.create(Release.create(this.rolls[idRoll]), 
+                                          Release.create(this.rolls[idRoll+1])));;
+            idRoll++;
+        }
+
+        //Calculate game points
+        let totalGamePoints: number = 0; 
+        for (let idFrame = 0; idFrame < 10; idFrame++){
+
+            let frame: Frame = this.frames[idFrame];
+            totalGamePoints += frame.getTotalPoints()
+
+            if (frame.isStrike()){
+                let nextOneFrame: Frame = this.frames[idFrame + 1];
+                if (nextOneFrame.isStrike()){
+                    totalGamePoints += nextOneFrame.getFirstReleasePoints();
+                    let nextSecondOneFrame: Frame = this.frames[idFrame + 2];
+                    totalGamePoints += nextSecondOneFrame.getFirstReleasePoints();
+                }
+                else{
+                    totalGamePoints += nextOneFrame.getTotalPoints();
+                }
+            }
+
+            if (frame.isSpire()){
+                let nextFrame: Frame = this.frames[idFrame + 1];
+                totalGamePoints += nextFrame.getFirstReleasePoints();
             }
         }
-        return totalSpecialPoints;
-    }
 
-    private isSpare(frameSubtotal: number) {
-        return frameSubtotal == this.NUM_STRIKE_PINS;
-    }
-    
-    private isStrike(cntFrame: number) {
-        return this.rolls[cntFrame*2] == this.NUM_STRIKE_PINS;
+        return totalGamePoints;
     }
 }
