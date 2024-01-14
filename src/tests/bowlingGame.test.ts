@@ -2,6 +2,7 @@ import { BowlingGame } from '../core/bowlingGame';
 
 const NUM_REALESES = 20;
 const NUM_STRIKE_PINS = 10;
+const NUM_FRAMES = 10;
 
 describe('The Bowling Game', ()=>{
 	let game;
@@ -66,19 +67,7 @@ describe('The Bowling Game', ()=>{
 
 	 it('final score should be 300 when a perfect game (all strikes)', ()=>{
 		
-		game.roll(NUM_STRIKE_PINS);
-		game.roll(NUM_STRIKE_PINS);
-		game.roll(NUM_STRIKE_PINS);
-		game.roll(NUM_STRIKE_PINS);
-		game.roll(NUM_STRIKE_PINS);
-		game.roll(NUM_STRIKE_PINS);
-		game.roll(NUM_STRIKE_PINS);
-		game.roll(NUM_STRIKE_PINS);
-		game.roll(NUM_STRIKE_PINS);
-		game.roll(NUM_STRIKE_PINS);
-		//Extra
-		game.roll(NUM_STRIKE_PINS);
-		game.roll(NUM_STRIKE_PINS);
+		rollPerfectGame(game);
 		
 		let finalScore = game.calculateFinalScore();
 
@@ -88,27 +77,7 @@ describe('The Bowling Game', ()=>{
 
 	 it('final score should be 150 when all spires of 5 and a final 5 (5/ + 5)', ()=>{
 		
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		game.roll(5);
-		//Extra
+		rollAllSpires(game, 5);
 		game.roll(5);
 				
 		let finalScore = game.calculateFinalScore();
@@ -119,27 +88,7 @@ describe('The Bowling Game', ()=>{
 
 	 it('final score should be 180 when all spires of 8 and a final 8 (8/ + 8)', ()=>{
 		
-		game.roll(8);
-		game.roll(2);
-		game.roll(8);
-		game.roll(2);
-		game.roll(8);
-		game.roll(2);
-		game.roll(8);
-		game.roll(2);
-		game.roll(8);
-		game.roll(2);
-		game.roll(8);
-		game.roll(2);
-		game.roll(8);
-		game.roll(2);
-		game.roll(8);
-		game.roll(2);
-		game.roll(8);
-		game.roll(2);
-		game.roll(8);
-		game.roll(2);
-		//Extra
+		rollAllSpires(game, 8);
 		game.roll(8);
 				
 		let finalScore = game.calculateFinalScore();
@@ -148,3 +97,26 @@ describe('The Bowling Game', ()=>{
 
 	 });
  });
+function rollPerfectGame(game: any) {
+	game.roll(NUM_STRIKE_PINS);
+	game.roll(NUM_STRIKE_PINS);
+	game.roll(NUM_STRIKE_PINS);
+	game.roll(NUM_STRIKE_PINS);
+	game.roll(NUM_STRIKE_PINS);
+	game.roll(NUM_STRIKE_PINS);
+	game.roll(NUM_STRIKE_PINS);
+	game.roll(NUM_STRIKE_PINS);
+	game.roll(NUM_STRIKE_PINS);
+	game.roll(NUM_STRIKE_PINS);
+	
+	game.roll(NUM_STRIKE_PINS);
+	game.roll(NUM_STRIKE_PINS);
+}
+
+function rollAllSpires(game: BowlingGame, numPinsSpireFirstRoll: number) {
+	for(let i = 0; i < NUM_FRAMES; i++ ){
+		game.roll(numPinsSpireFirstRoll);
+		game.roll(NUM_STRIKE_PINS-numPinsSpireFirstRoll);
+	} 
+}
+
