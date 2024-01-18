@@ -1,26 +1,26 @@
-# Template - Diseño Sostenible
-## Ingeniería y Artesanía del Software con TypeScript
+# Softwarecrafters - [Curso Diseño Sostenible](https://diseñosostenible.com)
+
 ![Diseño Sostenible](coverds.png)
 
-Plantilla base para practicar las katas del curso o para empezar un proyecto nuevo.
+## Kata Bowling Game
 
-Incluye:
-* TypeScript
-* Jest
-* ESLint
-* Prettier
-* Husky
+>**NOTA:** Plantilla para construir la base inicial del proyecto [aquí](https://github.com/softwarecrafters-io/ts-eslint-prettier-jest).
 
-## Instrucciones
-* `nvm use`
-* `npm install`
-* `npm test`
+El objetivo es crear una clase que permite recoger la funcionalidad de una partida de bolos para calcular el resultado de la puntuación.
 
-Más información sobre el curso en [diseñosostenible.com](https://diseñosostenible.com).
+- Una partida de bolos con diez turnos donde el jugador intenta derribar diez bolos.
+- Strike
+  - Derribar todos los bolso en el primer intento.
+  - Suma: 10 puntos + bolos derribados en los próximos 2 lanzamientos.
+- Spare
+  - Derribar todos los bolos en dos intentos.
+  - Suma: 10 puntos + bolos derribados en el sigtuiente lanzamiento.
+- Open Frame
+  - No derribar todos los bolos en dos intentos.
+  - Suma: Bolos derribados en ese turno.
+- Décimo Turno
+  - Jugador con spare o strike tiene lanzamientos adicionales.
+  - Máximo de tres bolas en este turno.
 
-### ESLint
-[TypeScript ESLint Rules](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin)
 
-### Husky hooks
-* Pre-commit: Execute npm analize (tsc + eslint --fix)
-* Pre-push: Execute test
+
